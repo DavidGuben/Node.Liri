@@ -1,21 +1,38 @@
 // Dependencies
 var keys    = require('./keys.js'); // twitter credentials
 
-var Twitter = require('twitter');
-var spotify = require('spotify');
-var request = require('request');
-var fs      = require('fs');
+var Twitter  = require('twitter');
+var spotify  = require('spotify');
+var request  = require('request');
+var inquirer = require('inquirer');
+var fs       = require('fs');
+
+inquirer.prompt([
+{
+  type: "list",
+  name: "userChoice",
+  message: "What would you like to do?",
+  choices: [
+    "View My Tweets",
+    "Spotify a Song",
+    "Find a Movie",
+    "Do what it says",
+    ]
+}
+]).then(function(answers){
+  console.log(JSON.stringify(answers, null, '   '));
+  console.log('choices:');
+
+});
 
 var writeToLog = function(data) {
   fs.appendFile("log.txt", '\r\n\r\n');
-
   fs.appendFile("log.txt", JSON.stringify(data), function(err) {
     if(err) {
       return console.log(err);
     }
-
-    console.log("log.txt was updated");
-});
+    console.log("log file updated");
+  });
 }
 
 // Simply grabs artists name from spotify api
@@ -93,8 +110,8 @@ var getMeMovie = function(movieName) {
         'Language: ': jsonData.Language,
         'Plot: ': jsonData.Plot,
         'Actors: ': jsonData.Actors,
-        'Rotten Tomatoes Rating: ' jsonData.tomatoRating,
-        'Rotten Tomatoes URL: ' jsonData.tomatoRatingURL
+        'Rotten Tomatoes Rating: ': jsonData.tomatoRating,
+        'Rotten Tomatoes URL: ': jsonData.tomatoRatingURL
       };
       console.log(data);
       writeToLog(data);
