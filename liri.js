@@ -1,4 +1,4 @@
-var keys = require('./keys.js') //alternative to environment variables
+var keys    = require('./keys.js') //alternative to environment variables
 var Twitter = require('twitter'); //connects to your twitter
 var spotify = require('spotify'); //spotify api
 var request = require('request'); //allows ajax requests
@@ -13,7 +13,7 @@ var getMeSpotify = function(songName){
 	if (songName === undefined){
 		songName = 'What\'s my age again';
 	}
-	 
+
 	spotify.search({ type: 'track', query: songName }, function(err, data) {
 	    if ( err ) {
 	        console.log('Error occurred: ' + err);
@@ -35,9 +35,9 @@ var getMeSpotify = function(songName){
 }
 
 var getMyTweets = function(){
-	 
+
 	var client = new Twitter(keys.twitterKeys);
-	 
+
 	var params = {screen_name: 'inrtracker'};
 	client.get('statuses/user_timeline', params, function(error, tweets, response){
 	  if (!error) {
@@ -49,7 +49,7 @@ var getMyTweets = function(){
 	  		console.log(tweets[i].text);
 	  	}
 	  }
-	});	
+	});
 }
 
 var getMeMovie = function(movieName){
@@ -83,7 +83,7 @@ var doWhatItSays = function(){
 	fs.readFile("random.txt", "utf8", function(error, data) {
 		console.log(data);
 		//debugger; //use to see what data looks like
-		
+
 		var dataArr = data.split(',')
 
 		if (dataArr.length == 2){
@@ -91,7 +91,7 @@ var doWhatItSays = function(){
 		}else if (dataArr.length == 1){
 			pick(dataArr[0]);
 		}
-		
+
 	});
 }
 
